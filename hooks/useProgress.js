@@ -1,10 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Mode, StepStatus, UserProgress, AppSettings } from '../types';
 
 const STORAGE_KEY_PREFIX = 'ppg_manual_progress_v1_';
 const SETTINGS_KEY = 'ppg_board_settings_v1';
 
-const DEFAULT_SETTINGS: AppSettings = {
+const DEFAULT_SETTINGS = {
   maxDeadlineMestrado: '24 Meses',
   maxDeadlineDoutorado: '48 Meses',
   defenseRules: 'Mínimo de 3 membros na banca de mestrado, 5 no doutorado.',
@@ -12,14 +11,14 @@ const DEFAULT_SETTINGS: AppSettings = {
   localNotes: 'Adicione aqui notas específicas da sua universidade...'
 };
 
-export const useProgress = (mode: Mode) => {
-  const [progress, setProgress] = useState<UserProgress>({
+export const useProgress = (mode) => {
+  const [progress, setProgress] = useState({
     status: {},
     checklist: {},
     favorites: {},
   });
 
-  const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
+  const [settings, setSettings] = useState(DEFAULT_SETTINGS);
 
   // Load Progress
   useEffect(() => {
@@ -49,20 +48,20 @@ export const useProgress = (mode: Mode) => {
   }, []);
 
   // Save Progress Logic
-  const saveProgress = useCallback((newProgress: UserProgress) => {
+  const saveProgress = useCallback((newProgress) => {
     localStorage.setItem(`${STORAGE_KEY_PREFIX}${mode}`, JSON.stringify(newProgress));
     setProgress(newProgress);
   }, [mode]);
 
   // Save Settings Logic
-  const saveSettings = useCallback((newSettings: AppSettings) => {
+  const saveSettings = useCallback((newSettings) => {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(newSettings));
     setSettings(newSettings);
   }, []);
 
-  const toggleStepStatus = (stepId: string) => {
+  const toggleStepStatus = (stepId) => {
     const current = progress.status[stepId] || 'todo';
-    let next: StepStatus = 'todo';
+    let next = 'todo';
     if (current === 'todo') next = 'doing';
     else if (current === 'doing') next = 'done';
     else next = 'todo';
@@ -74,7 +73,7 @@ export const useProgress = (mode: Mode) => {
     saveProgress(newProgress);
   };
 
-  const setChecklist = (itemId: string, checked: boolean) => {
+  const setChecklist = (itemId, checked) => {
     const newProgress = {
       ...progress,
       checklist: { ...progress.checklist, [itemId]: checked }
@@ -84,7 +83,7 @@ export const useProgress = (mode: Mode) => {
     saveProgress(newProgress);
   };
 
-  const toggleFavorite = (stepId: string) => {
+  const toggleFavorite = (stepId) => {
     const newProgress = {
       ...progress,
       favorites: { ...progress.favorites, [stepId]: !progress.favorites[stepId] }

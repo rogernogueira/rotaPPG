@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
 import { X, Save, Settings } from 'lucide-react';
-import { AppSettings } from '../types';
 
-interface SettingsDrawerProps {
-  isOpen: boolean;
-  onClose: () => void;
-  settings: AppSettings;
-  onSave: (s: AppSettings) => void;
-}
-
-export const SettingsDrawer: React.FC<SettingsDrawerProps> = ({ isOpen, onClose, settings, onSave }) => {
+export const SettingsDrawer = ({ isOpen, onClose, settings, onSave }) => {
   const [formData, setFormData] = useState(settings);
 
   // Sync when opening
@@ -17,7 +9,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = ({ isOpen, onClose,
     if(isOpen) setFormData(settings);
   }, [isOpen, settings]);
 
-  const handleChange = (field: keyof AppSettings, value: string) => {
+  const handleChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -34,7 +26,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = ({ isOpen, onClose,
       />
       <div className={`fixed inset-y-0 left-0 w-full md:w-96 bg-white shadow-2xl z-50 transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="flex items-center justify-between p-6 border-b">
-          <h2 className="text-xl font-bold flex items-center gap-2 text-gray-800">
+          <h2 className="text-xl font-bold flex items-center gap-2 text-brand-text">
             <Settings size={20} /> Configurações
           </h2>
           <button onClick={onClose}><X size={24} /></button>
@@ -42,7 +34,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = ({ isOpen, onClose,
 
         <div className="p-6 space-y-6 overflow-y-auto h-[calc(100vh-140px)]">
             <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Prazo Máximo (Mestrado)</label>
+                <label className="block text-sm font-semibold text-brand-gray mb-2">Prazo Máximo (Mestrado)</label>
                 <input 
                     type="text" 
                     className="w-full p-2 border rounded-lg"
@@ -51,7 +43,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = ({ isOpen, onClose,
                 />
             </div>
             <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Prazo Máximo (Doutorado)</label>
+                <label className="block text-sm font-semibold text-brand-gray mb-2">Prazo Máximo (Doutorado)</label>
                 <input 
                     type="text" 
                     className="w-full p-2 border rounded-lg"
@@ -60,7 +52,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = ({ isOpen, onClose,
                 />
             </div>
             <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Regras de Banca/Defesa</label>
+                <label className="block text-sm font-semibold text-brand-gray mb-2">Regras de Banca/Defesa</label>
                 <textarea 
                     className="w-full p-2 border rounded-lg h-24 text-sm"
                     value={formData.defenseRules}
@@ -68,7 +60,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = ({ isOpen, onClose,
                 />
             </div>
             <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Regras de Proficiência</label>
+                <label className="block text-sm font-semibold text-brand-gray mb-2">Regras de Proficiência</label>
                 <textarea 
                     className="w-full p-2 border rounded-lg h-24 text-sm"
                     value={formData.proficiencyRules}
@@ -76,7 +68,7 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = ({ isOpen, onClose,
                 />
             </div>
             <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Observações Locais</label>
+                <label className="block text-sm font-semibold text-brand-gray mb-2">Observações Locais</label>
                 <textarea 
                     className="w-full p-2 border rounded-lg h-24 text-sm"
                     value={formData.localNotes}
@@ -86,10 +78,10 @@ export const SettingsDrawer: React.FC<SettingsDrawerProps> = ({ isOpen, onClose,
             </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 w-full p-4 border-t bg-gray-50">
+        <div className="absolute bottom-0 left-0 w-full p-4 border-t bg-stone-50">
             <button 
                 onClick={handleSave}
-                className="w-full bg-brand-primary text-white py-3 rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-blue-700 transition"
+                className="w-full bg-brand-primary text-white py-3 rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-brand-primary/90 transition"
             >
                 <Save size={18} /> Salvar Alterações
             </button>

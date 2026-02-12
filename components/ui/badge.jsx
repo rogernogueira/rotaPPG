@@ -1,14 +1,7 @@
 import React from "react";
 import { cn } from "../../lib/utils";
 
-export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: "default" | "secondary" | "destructive" | "outline" | "workflow";
-  colorHex?: string; // For dynamic workflow coloring
-  className?: string;
-  style?: React.CSSProperties;
-}
-
-function Badge({ className, variant = "default", colorHex, style, ...props }: BadgeProps) {
+function Badge({ className, variant = "default", colorHex, style, ...props }) {
   
   // Custom logic for "tinted" backgrounds based on workflow hex color
   const workflowStyle = colorHex ? {

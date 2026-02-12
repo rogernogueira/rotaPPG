@@ -1,25 +1,15 @@
 import React from 'react';
-import { Step, StepStatus } from '../types';
-import { Check, Star, Pin, Lock, Play, Flag } from 'lucide-react';
+import { Check, Star, Play, Flag } from 'lucide-react';
 
-interface BoardNodeProps {
-  step: Step;
-  status: StepStatus;
-  isFavorite: boolean;
-  onClick: () => void;
-  index: number;
-  isLast: boolean;
-}
-
-export const BoardNode: React.FC<BoardNodeProps> = ({ step, status, isFavorite, onClick, index, isLast }) => {
+export const BoardNode = ({ step, status, isFavorite, onClick, index, isLast }) => {
   
   const isStart = index === 0;
 
   const getStatusColor = () => {
     switch (status) {
-      case 'done': return 'bg-green-500 border-green-600 text-white';
-      case 'doing': return 'bg-blue-500 border-blue-600 text-white';
-      default: return 'bg-white border-gray-200 text-gray-500 hover:border-brand-primary';
+      case 'done': return 'bg-brand-accent border-brand-accent text-white';
+      case 'doing': return 'bg-brand-primary border-brand-primary text-white';
+      default: return 'bg-white border-brand-gray/20 text-brand-gray hover:border-brand-primary';
     }
   };
 
@@ -53,23 +43,23 @@ export const BoardNode: React.FC<BoardNodeProps> = ({ step, status, isFavorite, 
 
         {/* Favorite Badge (Pin) */}
         {isFavorite && (
-          <div className="absolute -top-2 -right-2 bg-yellow-400 text-yellow-900 p-1.5 rounded-full shadow-md border-2 border-white transform rotate-12">
+          <div className="absolute -top-2 -right-2 bg-brand-gold text-brand-text p-1.5 rounded-full shadow-md border-2 border-white transform rotate-12">
             <Star size={16} fill="currentColor" />
           </div>
         )}
 
         {/* Status Badge (if doing) */}
         {status === 'doing' && (
-            <div className="absolute -bottom-2 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full border-2 border-white shadow-sm uppercase tracking-wider">
+            <div className="absolute -bottom-2 bg-brand-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full border-2 border-white shadow-sm uppercase tracking-wider">
                 Atual
             </div>
         )}
       </button>
 
       {/* Label Plaque */}
-      <div className="mt-3 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg border border-gray-200 shadow-sm text-center min-w-[140px] max-w-[160px] transform transition-all group-hover:scale-105">
-        <h3 className="text-sm font-bold text-gray-800 leading-tight">{step.short}</h3>
-        {status === 'done' && <span className="text-[10px] font-bold text-green-600 uppercase">Concluída</span>}
+      <div className="mt-3 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg border border-brand-gray/20 shadow-sm text-center min-w-[140px] max-w-[160px] transform transition-all group-hover:scale-105">
+        <h3 className="text-sm font-bold text-brand-text leading-tight">{step.short}</h3>
+        {status === 'done' && <span className="text-[10px] font-bold text-brand-accent uppercase">Concluída</span>}
       </div>
     </div>
   );

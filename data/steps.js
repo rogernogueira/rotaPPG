@@ -1,6 +1,4 @@
-import { Step } from '../types';
-
-export const STEPS: Step[] = [
+export const STEPS = [
   // --- MESTRADO ---
   {
     id: 'm-01',

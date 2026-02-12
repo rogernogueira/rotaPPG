@@ -14,6 +14,13 @@
     <script>
       tailwind.config = {
         theme: {
+          container: {
+            center: true,
+            padding: "2rem",
+            screens: {
+              "2xl": "1400px",
+            },
+          },
           extend: {
             fontFamily: {
               sans: ['Open Sans', 'sans-serif'],
@@ -24,7 +31,12 @@
                 primary: '#5B84B1',
                 secondary: '#D6C68B',
                 accent: '#9CB994',
-                bg: '#FFFFFF',
+                blue: '#5B84B1',
+                gold: '#D6C68B',
+                'gold-dark': '#b5a465',
+                green: '#9CB994',
+                gray: '#5A5B5D',
+                text: '#333333'
               }
             }
           }
@@ -59,6 +71,6 @@
 </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
+    <script type="module" src="/index.jsx"></script>
   </body>
 </html>

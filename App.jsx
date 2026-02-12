@@ -1,9 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { GraduationCap, Search, Settings as SettingsIcon, RotateCcw, FileText, Filter } from 'lucide-react';
+import { GraduationCap, Search, Settings as SettingsIcon, RotateCcw, FileText } from 'lucide-react';
 
 import { STEPS } from './data/steps';
-import { Mode } from './types';
 import { useProgress } from './hooks/useProgress';
 
 import { Board } from './components/Board';
@@ -13,10 +12,10 @@ import { PrintView } from './components/PrintView';
 
 // Helper to get query params for mode logic in simpler router setup
 const MainApp = () => {
-  const [mode, setMode] = useState<Mode>('mestrado');
-  const [selectedStepId, setSelectedStepId] = useState<string | null>(null);
+  const [mode, setMode] = useState('mestrado');
+  const [selectedStepId, setSelectedStepId] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [filter, setFilter] = useState<'all' | 'pending' | 'doing' | 'done' | 'favorite'>('all');
+  const [filter, setFilter] = useState('all');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const { 
@@ -63,7 +62,7 @@ const MainApp = () => {
   const progressPercent = totalSteps > 0 ? (completedSteps / totalSteps) * 100 : 0;
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col text-gray-800 font-sans">
+    <div className="min-h-screen bg-stone-50 flex flex-col text-brand-text font-sans">
       
       {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-30">
@@ -80,13 +79,13 @@ const MainApp = () => {
                  <div className="flex gap-2 text-xs mt-1">
                     <button 
                       onClick={() => setMode('mestrado')}
-                      className={`px-3 py-1 rounded-full transition-colors ${mode === 'mestrado' ? 'bg-brand-secondary text-white font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-100'}`}
+                      className={`px-3 py-1 rounded-full transition-colors ${mode === 'mestrado' ? 'bg-brand-secondary text-white font-bold shadow-sm' : 'text-brand-gray hover:bg-brand-gray/10'}`}
                     >
                       Mestrado
                     </button>
                     <button 
                       onClick={() => setMode('doutorado')}
-                      className={`px-3 py-1 rounded-full transition-colors ${mode === 'doutorado' ? 'bg-brand-secondary text-white font-bold shadow-sm' : 'text-gray-500 hover:bg-gray-100'}`}
+                      className={`px-3 py-1 rounded-full transition-colors ${mode === 'doutorado' ? 'bg-brand-secondary text-white font-bold shadow-sm' : 'text-brand-gray hover:bg-brand-gray/10'}`}
                     >
                       Doutorado
                     </button>
@@ -98,11 +97,11 @@ const MainApp = () => {
             <div className="flex flex-1 md:justify-end items-center gap-2 md:gap-4 overflow-x-auto pb-1 md:pb-0 scrollbar-hide">
               {/* Search */}
               <div className="relative group min-w-[160px]">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-brand-primary" size={16} />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-gray group-focus-within:text-brand-primary" size={16} />
                 <input 
                   type="text" 
                   placeholder="Buscar etapas..." 
-                  className="pl-9 pr-3 py-2 bg-gray-100 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary w-full border border-transparent focus:border-white focus:bg-white transition-all shadow-inner"
+                  className="pl-9 pr-3 py-2 bg-brand-gray/10 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary w-full border border-transparent focus:border-white focus:bg-white transition-all shadow-inner"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -111,8 +110,8 @@ const MainApp = () => {
               {/* Filter */}
               <select 
                 value={filter}
-                onChange={(e) => setFilter(e.target.value as any)}
-                className="bg-white border border-gray-200 text-sm rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-brand-primary shadow-sm"
+                onChange={(e) => setFilter(e.target.value)}
+                className="bg-white border border-brand-gray/20 text-sm rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-brand-primary shadow-sm"
               >
                 <option value="all">Todas</option>
                 <option value="pending">Pendentes</option>
@@ -121,13 +120,13 @@ const MainApp = () => {
                 <option value="favorite">Favoritas</option>
               </select>
 
-              <div className="h-6 w-px bg-gray-200 mx-1 hidden md:block"></div>
+              <div className="h-6 w-px bg-brand-gray/20 mx-1 hidden md:block"></div>
 
               {/* Actions */}
               <Link 
                 to="/print" 
                 state={{ mode }}
-                className="p-2 text-gray-500 hover:text-brand-primary hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-2 text-brand-gray hover:text-brand-primary hover:bg-brand-gray/10 rounded-lg transition-colors"
                 title="Versão para Impressão"
               >
                 <FileText size={20} />
@@ -135,7 +134,7 @@ const MainApp = () => {
               
               <button 
                 onClick={() => setIsSettingsOpen(true)}
-                className="p-2 text-gray-500 hover:text-brand-primary hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-2 text-brand-gray hover:text-brand-primary hover:bg-brand-gray/10 rounded-lg transition-colors"
                 title="Configurações"
               >
                 <SettingsIcon size={20} />
@@ -153,7 +152,7 @@ const MainApp = () => {
         </div>
         
         {/* Progress Bar */}
-        <div className="h-1 bg-gray-200 w-full relative z-40">
+        <div className="h-1 bg-brand-gray/20 w-full relative z-40">
             <div 
                 className="h-full bg-brand-accent transition-all duration-500 shadow-[0_0_10px_rgba(156,185,148,0.5)]" 
                 style={{ width: `${progressPercent}%` }}
@@ -164,10 +163,10 @@ const MainApp = () => {
       {/* Main Content */}
       <main className="flex-1 p-4 md:p-8 overflow-x-hidden">
          <div className="text-center mb-8">
-            <h2 className="text-3xl font-black text-gray-800 tracking-tight mb-2">
+            <h2 className="text-3xl font-black text-brand-text tracking-tight mb-2">
                 Trilha do {mode === 'mestrado' ? 'Mestrado' : 'Doutorado'}
             </h2>
-            <p className="text-gray-500 font-medium">
+            <p className="text-brand-gray font-medium">
                 {completedSteps} de {totalSteps} etapas concluídas ({Math.round(progressPercent)}%)
             </p>
          </div>
@@ -193,12 +192,12 @@ const MainApp = () => {
                                 <span className="bg-brand-primary/10 text-brand-primary font-bold px-2 py-1 rounded text-xs group-hover:bg-brand-primary group-hover:text-white transition-colors">Etapa {step.order}</span>
                                 {progress.status[step.id] === 'done' && <span className="text-brand-accent text-xs font-bold">Concluída</span>}
                             </div>
-                            <h3 className="font-bold text-gray-800 text-lg mb-1">{step.title}</h3>
-                            <p className="text-gray-500 text-sm line-clamp-2">{step.description}</p>
+                            <h3 className="font-bold text-brand-text text-lg mb-1">{step.title}</h3>
+                            <p className="text-brand-gray text-sm line-clamp-2">{step.description}</p>
                         </button>
                     ))
                 ) : (
-                    <div className="col-span-full text-center py-12 text-gray-400">
+                    <div className="col-span-full text-center py-12 text-brand-gray">
                         Nenhuma etapa encontrada com os filtros atuais.
                     </div>
                 )}

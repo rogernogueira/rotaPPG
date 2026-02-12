@@ -1,16 +1,9 @@
 import React from 'react';
-import { Step, UserProgress } from '../types';
 import { BoardNode } from './BoardNode';
 
-interface BoardProps {
-  steps: Step[];
-  progress: UserProgress;
-  onStepClick: (step: Step) => void;
-}
-
-export const Board: React.FC<BoardProps> = ({ steps, progress, onStepClick }) => {
+export const Board = ({ steps, progress, onStepClick }) => {
   
-  const getPathDirection = (index: number) => {
+  const getPathDirection = (index) => {
     if (index >= steps.length - 1) return null;
 
     const row = Math.floor(index / 4);
@@ -25,7 +18,7 @@ export const Board: React.FC<BoardProps> = ({ steps, progress, onStepClick }) =>
   };
 
   // Road Component
-  const Road = ({ className, vertical = false }: { className?: string, vertical?: boolean }) => (
+  const Road = ({ className, vertical = false }) => (
     <div className={`absolute bg-stone-200 border-stone-300 shadow-inner z-0 ${className} ${vertical ? 'border-x-4' : 'border-y-4'}`}>
         <div className={`absolute inset-0 flex items-center justify-center opacity-40`}>
             <div className={`border-stone-400 border-dashed ${vertical ? 'h-full border-l-2' : 'w-full border-t-2'}`} />
